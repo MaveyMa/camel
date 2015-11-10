@@ -1,0 +1,153 @@
+// Name: David Jia, Mavey Ma
+// Created: Friday, Nov. 6, 2015
+// Camel Program
+
+#include <iostream> // input output
+#include <string> // string
+#include <cstdlib> // srand() rand()
+#include <iomanip> 
+#include <cassert> // assert()
+#include <cctype> // toupper()
+#include <ctime> // time()
+using namespace std;
+
+void shouldDrink(int& playerThirstLevel, int& numDrinksLeft);
+//SUMMARY: Restores thirst level of player.
+//PRE: Player must make choice 'A'.
+//POST: Thirst level goes to zero. Number of drinks decreases by one.
+
+void goModerateSpeed(int& playerMilesTraveled, int& nativesTraveled, int& playerThirstLevel, int& camelTiredness);
+//SUMMARY: Makes player travel at moderate speed.
+//PRE:  Player must make choice 'B'.
+//POST: Player travels a moderate distance, thirst level and camel tiredness increases by one. Natives travel closer to player. 
+
+void goFullSpeed(int& playerMilesTraveled, int& nativesTraveled, int& playerThirstLevel, int& camelTiredness);
+//SUMMARY: Makes player travel at full speed.
+//PRE:  Player must make choice 'C'.
+//POST: Player travels a large distance, thirst level +1 and camel tiredness +1-3. Natives travel closer to player. 
+
+void rest(int& camelTiredness, int& nativesTraveled);
+//SUMMARY: Player and camel stop to rest.
+//PRE:  Player must make choice 'D'.
+//POST: Camel tiredness goes back to zero. Natives travel closer to player. 
+
+void statusCheck(int& playerMilesTraveled, int& numDrinksLeft, int& nativesTraveled);
+//SUMMARY: Gives updates on status.
+//PRE:  Player must make choice 'E'.
+//POST: Returns distance Player traveled, number of drinks left, and how far behind the natives are from player.
+
+void oasis(int& numDrinksLeft, int& playerThirstLevel, int& camelTiredness);
+//SUMMARY: Random Event that restores player's status.
+//PRE: 1 in 20 chance of finding oasis while traveling.
+//POST: Resets number of drinks, quenches thirst, and restores camel. 
+
+//cacti
+
+//sandstorm
+
+//heatStroke
+
+int main()
+{
+    srand(time(0));
+    bool done = false;
+    int playerDistance = 0;
+    int thirstLevel = 0;
+    int cTiredness = 0;
+    int drinksLeft = 3;
+    char userChoice;
+    
+    int nativesDistance = -20; //TWENTY MILES BACK
+    int nativesDistanceFromPlayer;
+    
+    cout << "Welcome to Camel!" << endl;
+    cout << "You have stolen a camel to make your way across the great Mobi desert." << endl;
+    cout << "The natives want their camel back and are chasing you down!" << endl;
+    cout << "Survive your desert trek and out run the natives." << endl;
+    
+    while(done == false)
+    {    
+        cout << "A. Drink from you canteen." << endl;
+        cout << "B. Ahead moderate speed." << endl;
+        cout << "C. Ahead full speed." << endl;
+        cout << "D. Stop for the night." << endl;
+        cout << "E. Status check." << endl;
+        cout << "Q. Quit." << endl;
+        
+        cin >> userChoice;
+        userChoice = toupper(userChoice);
+        
+        if(userChoice == 'Q')
+        {
+            done = true;
+            cout << "You have quit the game." << endl;
+        }
+        
+        else if(userChoice == 'A')
+        {
+            shouldDrink(thirstLevel, drinksLeft);
+        }
+        
+        else if(userChoice == 'B')
+        {
+            goModerateSpeed(playerDistance, nativesDistance, thirstLevel, cTiredness);
+        }
+        /*
+        else if(userChoice == 'C')
+        {
+            
+        }
+        
+        else if(userChoice == 'D')
+        {
+            
+        }
+        
+        else if(userChoice == 'E')
+        {
+            
+        }*/
+        
+        else
+        {
+            cout << "That is not a valid choice. Please enter a valid choice." << endl << endl;
+        }
+        
+        if (thirstLevel > 4)
+        {
+            cout << "You are thirsty." << endl;
+        }
+        
+    }//END WHILE LOOP
+    return 0;
+}//END MAIN
+
+void shouldDrink(int& playerThirstLevel, int& numDrinksLeft)
+{
+    if (numDrinksLeft > 0)
+    {
+        cout << "You take a drink from the canteen." << endl;
+        cout << "You quenched your thirst." << endl;
+        playerThirstLevel = 0;
+        numDrinksLeft -= 1;
+        cout << "You have " << numDrinksLeft << " drink(s) left." << endl;
+    }
+    else
+    {
+        cout << "You have no more drinks left." << endl;
+    }
+}//END SHOULD DRINK
+
+void goModerateSpeed(int& playerMilesTraveled, int& nativesTraveled, int& playerThirstLevel, int& camelTiredness)
+{
+    srand(time(0));
+    int playerMove = rand() % 8 + 5;
+    int nativesMove = rand() % 8 + 7;
+    
+    playerMilesTraveled += playerMove;
+    nativesTraveled += nativesMove;
+    playerThirstLevel += 1;
+    camelTiredness += 1;
+    
+    cout << "You traveled " << playerMove << " miles." << endl;
+}//END MODERATE SPEED
